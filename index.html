@@ -3,710 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishna Patel — Embedded Systems Engineer</title>
-<meta name="description" content="Krishna Patel — Embedded systems &amp; firmware engineer. UAV autonomy, RTK GNSS, bare-metal STM32, custom firmware.">
+<title>Krishna Patel — Embedded Systems & Robotics</title>
+<meta name="description" content="Krishna Patel — Embedded systems, firmware, UAV autonomy, robotics and computer vision projects.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0e0f;
-    --panel:#10161a;
-    --panel-2:#0d1114;
-    --line:#22302f;
-    --line-soft:#182220;
-    --ink:#e7ece9;
-    --ink-dim:#93a19c;
-    --ink-faint:#5c6b67;
-    --amber:#ffb020;
-    --amber-dim:#8a6117;
-    --teal:#5fd9c9;
-    --radius:2px;
-    --mono:'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
-    --sans:'Inter', -apple-system, sans-serif;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--sans);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
-  }
-
-  /* background grid texture */
-  body::before{
-    content:'';
-    position:fixed; inset:0;
-    background-image:
-      linear-gradient(var(--line-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-    background-size:64px 64px;
-    opacity:0.35;
-    pointer-events:none;
-    z-index:0;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
-  }
-
-  a{color:inherit;text-decoration:none;}
-  ::selection{background:var(--amber);color:#0a0e0f;}
-
-  .wrap{max-width:920px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
-
-  /* ---------- NAV ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(10,14,15,0.88);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  nav{
-    max-width:920px;margin:0 auto;padding:16px 28px;
-    display:flex;align-items:center;justify-content:space-between;
-  }
-  .brand{
-    font-family:var(--mono);font-weight:700;font-size:15px;color:var(--ink);
-    letter-spacing:-0.02em;
-  }
-  .brand span{color:var(--amber);}
-  .navlinks{display:flex;gap:28px;font-family:var(--mono);font-size:13px;color:var(--ink-dim);}
-  .navlinks a{transition:color .15s ease;position:relative;}
-  .navlinks a:hover{color:var(--amber);}
-  .navlinks a:focus-visible, a:focus-visible{outline:1px solid var(--amber);outline-offset:3px;}
-  .navlinks .mobile-hide{display:inline;}
-  @media (max-width:640px){ .navlinks .mobile-hide{display:none;} }
-
-  /* ---------- HERO ---------- */
-  .hero{
-    padding:88px 0 64px;
-    border-bottom:1px solid var(--line);
-    position:relative;
-  }
-  .hero-boot{
-    font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);
-    margin-bottom:22px; display:flex; align-items:center; gap:8px;
-  }
-  .hero-boot .dot{width:6px;height:6px;background:var(--teal);border-radius:50%;
-    box-shadow:0 0 8px var(--teal); animation:blink 2s ease-in-out infinite;}
-  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.35;}}
-  h1{
-    font-family:var(--mono);
-    font-weight:800;
-    font-size:clamp(34px,6vw,58px);
-    line-height:1.05;
-    letter-spacing:-0.02em;
-    color:var(--ink);
-    max-width:14ch;
-  }
-  .hero-role{
-    font-family:var(--sans);font-size:clamp(16px,2.2vw,19px);
-    color:var(--ink-dim); margin-top:18px; max-width:52ch; font-weight:400;
-  }
-  .hero-role strong{color:var(--ink);font-weight:600;}
-  .hero-meta{
-    display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:28px;
-    font-family:var(--mono); font-size:12.5px; color:var(--ink-faint);
-  }
-  .hero-meta a{color:var(--ink-dim);border-bottom:1px solid transparent;transition:.15s;}
-  .hero-meta a:hover{color:var(--amber);border-bottom-color:var(--amber-dim);}
-
-  .hero-links{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
-  .btn{
-    font-family:var(--mono);font-size:13px;padding:11px 20px;border:1px solid var(--line);
-    color:var(--ink);transition:.15s ease; background:var(--panel);
-  }
-  .btn:hover{border-color:var(--amber);color:var(--amber);}
-  .btn.primary{background:var(--amber);color:#0a0e0f;border-color:var(--amber);font-weight:600;}
-  .btn.primary:hover{background:#ffc350;color:#0a0e0f;}
-
-  /* scope trace */
-  .trace{margin-top:52px;width:100%;height:64px;}
-  .trace path{
-    fill:none;stroke:var(--teal);stroke-width:1.6;
-    stroke-dasharray:900; stroke-dashoffset:900;
-    animation:draw 2.4s ease-out forwards .3s;
-    filter:drop-shadow(0 0 6px rgba(95,217,201,0.35));
-  }
-  @keyframes draw{to{stroke-dashoffset:0;}}
-
-  /* ---------- SECTIONS ---------- */
-  section{padding:64px 0;border-bottom:1px solid var(--line);}
-  section:last-of-type{border-bottom:none;}
-  h2{
-    font-family:var(--mono);font-size:22px;font-weight:700;color:var(--ink);
-    margin-bottom:34px; letter-spacing:-0.01em;
-  }
-
-  /* experience */
-  .job{
-    display:grid; grid-template-columns:170px 1fr; gap:24px;
-    padding:24px 0; border-top:1px solid var(--line-soft);
-  }
-  .job:first-of-type{border-top:none;}
-  .job-time{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:3px;}
-  .job-title{font-family:var(--sans);font-weight:700;font-size:16.5px;color:var(--ink);}
-  .job-org{font-family:var(--mono);font-size:12.5px;color:var(--teal);margin-top:2px;margin-bottom:14px;}
-  .job ul{list-style:none;}
-  .job li{
-    position:relative; padding-left:18px; margin-bottom:9px;
-    font-size:14.5px; color:var(--ink-dim); line-height:1.55;
-  }
-  .job li::before{
-    content:'';position:absolute;left:0;top:9px;width:6px;height:1px;background:var(--amber-dim);
-  }
-  @media (max-width:640px){ .job{grid-template-columns:1fr;gap:6px;} }
-
-  /* projects */
-  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
-  @media (max-width:700px){ .proj-grid{grid-template-columns:1fr;} }
-  .proj{
-    background:var(--panel-2); padding:26px; position:relative;
-  }
-  .proj-tag{
-    font-family:var(--mono);font-size:11px;color:var(--amber);
-    border:1px solid var(--amber-dim); display:inline-block;
-    padding:2px 8px; margin-bottom:14px; border-radius:1px;
-  }
-  .proj h3{font-family:var(--sans);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.3;}
-  .proj p{font-size:13.8px;color:var(--ink-dim);margin-bottom:14px;}
-  .proj-links{display:flex;gap:14px;font-family:var(--mono);font-size:12px;}
-  .proj-links a{color:var(--ink-faint);border-bottom:1px solid var(--line);transition:.15s;}
-  .proj-links a:hover{color:var(--amber);border-color:var(--amber);}
-  .proj.wide{grid-column:1 / -1;}
-
-  .diagram{
-    margin-top:20px; padding:18px 16px; background:var(--bg);
-    border:1px solid var(--line);
-  }
-  .diagram svg{width:100%;height:auto;display:block;}
-  .diagram-caption{
-    font-family:var(--mono); font-size:11.5px; color:var(--ink-faint);
-    margin-top:10px; line-height:1.5;
-  }
-  .diagram-caption b{color:var(--teal);font-weight:600;}
-
-  /* skills - register map */
-  .reg-map{border:1px solid var(--line);}
-  .reg-row{
-    display:grid; grid-template-columns:190px 1fr; border-top:1px solid var(--line);
-  }
-  .reg-row:first-child{border-top:none;}
-  .reg-label{
-    font-family:var(--mono); font-size:12px; color:var(--ink-faint);
-    padding:16px 18px; background:var(--panel-2); border-right:1px solid var(--line);
-  }
-  .reg-vals{padding:14px 18px; display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center;}
-  .chip{
-    font-family:var(--mono); font-size:12.5px; color:var(--ink);
-    padding:4px 10px; border:1px solid var(--line); background:var(--panel);
-  }
-  @media (max-width:640px){
-    .reg-row{grid-template-columns:1fr;}
-    .reg-label{border-right:none;border-bottom:1px solid var(--line);}
-  }
-
-  /* achievements */
-  .ach-list{display:flex;flex-direction:column;}
-  .ach{
-    display:flex; gap:18px; padding:16px 0; border-top:1px solid var(--line-soft);
-    align-items:baseline;
-  }
-  .ach:first-child{border-top:none;}
-  .ach-mark{font-family:var(--mono);color:var(--amber);font-size:13px;flex-shrink:0;width:16px;}
-  .ach p{font-size:14.5px;color:var(--ink-dim);}
-  .ach strong{color:var(--ink);font-weight:600;}
-
-  /* education / por */
-  .edu-row{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-top:1px solid var(--line-soft);flex-wrap:wrap;}
-  .edu-row:first-child{border-top:none;}
-  .edu-name{font-weight:600;font-size:14.5px;color:var(--ink);}
-  .edu-sub{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:2px;}
-  .edu-meta{font-family:var(--mono);font-size:12px;color:var(--ink-dim);text-align:right;white-space:nowrap;}
-
-  /* footer / contact */
-  footer{padding:56px 0 64px;}
-  .contact-line{
-    font-family:var(--mono); font-size:clamp(20px,3.4vw,28px); color:var(--ink);
-    line-height:1.5; max-width:18ch;
-  }
-  .contact-line a{border-bottom:1px solid var(--amber-dim); color:var(--ink);}
-  .contact-line a:hover{color:var(--amber);border-color:var(--amber);}
-  .foot-meta{
-    margin-top:36px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
-    font-family:var(--mono); font-size:12px; color:var(--ink-faint);
-  }
-  .foot-meta a{color:var(--ink-faint);}
-  .foot-meta a:hover{color:var(--amber);}
+:root{--bg:#080b0d;--panel:#10151a;--panel2:#0c1115;--line:#263138;--text:#eef3f1;--muted:#9aa7a5;--faint:#66736f;--accent:#d6ff45;--cyan:#68e1d1;--max:1120px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6}a{color:inherit;text-decoration:none}img{max-width:100%;display:block}.mono{font-family:"JetBrains Mono",monospace}.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px}
+header{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(8,11,13,.9);backdrop-filter:blur(14px)}
+nav{height:64px;display:flex;align-items:center;justify-content:space-between}.brand{font:700 15px "JetBrains Mono";letter-spacing:.06em}.brand b{color:var(--accent)}.nav{display:flex;gap:24px;font:500 12px "JetBrains Mono";color:var(--muted)}.nav a:hover{color:var(--accent)}
+.hero{padding:92px 0 76px;border-bottom:1px solid var(--line)}.kicker{font:500 11px "JetBrains Mono";color:var(--cyan);letter-spacing:.08em;text-transform:uppercase}.hero h1{font-size:clamp(44px,8vw,92px);line-height:.98;letter-spacing:-.055em;max-width:10ch;margin:16px 0 24px}.hero p{font-size:clamp(17px,2vw,21px);color:var(--muted);max-width:780px}.hero p strong{color:var(--text)}.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{padding:11px 16px;border:1px solid var(--line);background:var(--panel);font:600 12px "JetBrains Mono";transition:.2s}.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#0a0d0f}.btn.primary:hover{color:#0a0d0f;filter:brightness(1.06)}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin-top:48px}.quick div{padding:18px;border-right:1px solid var(--line)}.quick div:last-child{border-right:none}.quick small{display:block;color:var(--faint);font:500 10px "JetBrains Mono";text-transform:uppercase}.quick strong{display:block;font-size:15px;margin-top:6px}
+section{padding:72px 0;border-bottom:1px solid var(--line)}section h2{font:700 22px "JetBrains Mono";margin:0 0 30px}section h2 span{color:var(--accent)}
+.section-intro{color:var(--muted);max-width:720px;margin:-8px 0 28px}
+.exp{display:grid;grid-template-columns:180px 1fr;gap:28px;padding:22px 0;border-top:1px solid var(--line)}.exp:first-child{border-top:none}.exp .date{font:500 11px "JetBrains Mono";color:var(--faint)}.exp h3{margin:0;font-size:18px}.org{font:500 12px "JetBrains Mono";color:var(--cyan);margin-top:3px}.exp ul{margin:16px 0 0;padding-left:18px;color:var(--muted)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.filter{font:500 11px "JetBrains Mono";padding:7px 10px;border:1px solid var(--line);color:var(--muted);cursor:pointer;background:transparent}.filter.active,.filter:hover{color:var(--accent);border-color:var(--accent)}
+.projects{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.card{grid-column:span 6;border:1px solid var(--line);background:linear-gradient(180deg,#10161a,#0b1013);min-height:390px;display:flex;flex-direction:column;overflow:hidden;transition:.22s}.card:hover{transform:translateY(-3px);border-color:#46555b}.card.featured{grid-column:span 12;min-height:430px}.thumb{height:190px;overflow:hidden;background:#0a0e11}.featured .thumb{height:250px}.thumb img{width:100%;height:100%;object-fit:cover;opacity:.84;filter:saturate(.8) contrast(1.03);transition:transform .3s}.card:hover .thumb img{transform:scale(1.03)}.body{padding:22px;display:flex;flex-direction:column;flex:1}.tag{font:500 10px "JetBrains Mono";color:var(--accent);text-transform:uppercase;letter-spacing:.08em}.body h3{font-size:20px;line-height:1.2;margin:9px 0 10px}.body p{color:var(--muted);font-size:14px;margin:0}.tech{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.chip{font:500 10px "JetBrains Mono";border:1px solid var(--line);padding:4px 7px;color:var(--faint)}.card-footer{margin-top:auto;padding-top:22px;display:flex;justify-content:space-between;align-items:center;font:500 11px "JetBrains Mono";color:var(--muted)}.open{color:var(--accent)}
+.skills{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;border:1px solid var(--line);background:var(--line)}.skill{background:var(--panel2);padding:18px}.skill h4{font:600 11px "JetBrains Mono";color:var(--cyan);margin:0 0 12px}.skill p{margin:0;color:var(--muted);font-size:13px}
+.ach{display:grid;grid-template-columns:120px 1fr;gap:24px;padding:18px 0;border-top:1px solid var(--line)}.ach:first-child{border-top:none}.ach .n{font:700 11px "JetBrains Mono";color:var(--accent)}.ach p{margin:0;color:var(--muted)}.ach strong{color:var(--text)}
+footer{padding:70px 0 90px}.contact{border:1px solid var(--line);padding:26px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.contact h3{font-size:25px;line-height:1.2;margin:0 0 10px}.contact p{margin:0;color:var(--muted)}
+.detail{display:none;padding:72px 0 110px}.detail.show{display:block}.detail-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:28px}.back{font:500 11px "JetBrains Mono";color:var(--muted)}.back:hover{color:var(--accent)}.detail h1{font-size:clamp(36px,6vw,68px);line-height:1.02;max-width:920px;margin:12px 0}.detail-sub{color:var(--muted);font-size:17px;max-width:850px}.detail-grid{display:grid;grid-template-columns:2fr 1fr;gap:30px;margin-top:34px}.hero-media{border:1px solid var(--line);background:#0b0f12}.hero-media img{width:100%;aspect-ratio:16/9;object-fit:cover}.detail-copy h2{font-size:18px;margin:0 0 14px}.detail-copy p,.detail-copy li{color:var(--muted);font-size:14px}.detail-copy ul{padding-left:18px}.meta{border:1px solid var(--line);background:var(--panel2);padding:18px;height:max-content}.meta dt{font:600 10px "JetBrains Mono";color:var(--faint);text-transform:uppercase;margin-top:14px}.meta dt:first-child{margin-top:0}.meta dd{margin:4px 0 0;color:var(--text);font-size:13px}.media-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.media-grid img{width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line)}.video{margin-top:24px;border:1px solid var(--line);background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--faint);font:500 11px "JetBrains Mono";text-align:center;padding:30px}.note{margin-top:24px;padding:14px 16px;border-left:2px solid var(--accent);background:var(--panel2);color:var(--muted);font-size:12px}
+.hide{display:none!important}
+@media(max-width:850px){.quick{grid-template-columns:repeat(2,1fr)}.quick div:nth-child(2){border-right:none}.quick div:nth-child(-n+2){border-bottom:1px solid var(--line)}.skills{grid-template-columns:repeat(2,1fr)}.detail-grid{grid-template-columns:1fr}.card,.card.featured{grid-column:span 12}}
+@media(max-width:620px){.container{width:min(var(--max),calc(100% - 28px))}.nav{gap:12px}.nav a:nth-child(2),.nav a:nth-child(3){display:none}.hero{padding-top:64px}.quick{grid-template-columns:1fr 1fr}.exp{grid-template-columns:1fr;gap:4px}.skills{grid-template-columns:1fr}.contact{flex-direction:column;align-items:flex-start}.media-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<header>
-  <nav>
-    <div class="brand">KP<span>_</span></div>
-    <div class="navlinks">
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills" class="mobile-hide">Skills</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-</header>
-
-<main class="wrap">
-
-  <section class="hero">
-    <div class="hero-boot"><span class="dot"></span>system online — ahmedabad, in</div>
-    <h1>Krishna Patel</h1>
-    <p class="hero-role">Embedded systems engineer building the <strong>firmware and control layer</strong> for autonomous aircraft — from register-level drivers to RTK-guided flight.</p>
-    <div class="hero-meta">
-      <span>B.Tech ECE — Nirma University</span>
-      <span>·</span>
-      <span>Embedded Systems Design Engineer @ Protthapan Technologies</span>
-    </div>
-    <div class="hero-links">
-      <a class="btn primary" href="mailto:krishna.r282005@gmail.com">Get in touch</a>
-      <a class="btn" href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub ↗</a>
-      <a class="btn" href="https://www.linkedin.com/in/krishna-patel-77b032345/" target="_blank" rel="noopener">LinkedIn ↗</a>
-    </div>
-
-    <svg class="trace" viewBox="0 0 900 64" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0,32 L60,32 L80,10 L100,54 L120,32 L200,32 L220,18 L240,46 L260,32 L340,32 L365,32 L380,4 L395,60 L410,32 L480,32 L500,22 L520,42 L540,32 L620,32 L640,14 L660,50 L680,32 L900,32" />
-    </svg>
-  </section>
-
-  <section id="experience">
-    <h2>Experience</h2>
-
-    <div class="job">
-      <div class="job-time">Jul 2025 — Jun 2026</div>
-      <div>
-        <div class="job-title">Embedded System Design Engineer</div>
-        <div class="job-org">Protthapan Technologies Pvt. Ltd. — Aviation / Aerospace</div>
-        <ul>
-          <li>Led development of SAAHAS 1.0 &amp; 2.0, an autonomous docking system with automated takeoff, moving-platform recovery, and precision landing</li>
-          <li>Built an RTK GNSS correction pipeline parsing CRC-validated RTCM3 messages and injecting them into the flight controller via MAVLink for centimeter-level positioning</li>
-          <li>Designed embedded electronics and CAN-based control architecture for a 40kg heavy-lift UAV, integrating flight controllers, ESCs, and onboard peripherals</li>
-          <li>Contributed to 10+ UAV platforms across 5", 7", 10", and heavy-lift frames</li>
-          <li>Ran 100+ field trials validating embedded hardware and autonomous flight systems, supporting defense demonstrations</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="job">
-      <div class="job-time">Jun 2024 — Jul 2024</div>
-      <div>
-        <div class="job-title">Summer Intern</div>
-        <div class="job-org">Adani Foundation</div>
-        <ul>
-          <li>Delivered technical sessions at government schools; managed logistics, stakeholder interviews, and data collection</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="proj-grid">
-
-      <div class="proj wide">
-        <span class="proj-tag">flagship</span>
-        <h3>SAAHAS — Autonomous UAV Docking &amp; Recovery</h3>
-        <p>Full autonomous precision-landing stack for a drone recovering onto a moving platform. Blends RTK GNSS with OpenCV visual tracking, switching from GPS to a PD-controlled camera lock as the drone descends — with platform-velocity compensation from GPS deltas and a 3-layer noise filter to reject spurious jumps. Also includes an ESP32 head-tracking firmware (MPU6500 sensor fusion + complementary filtering) driving SBUS packets for low-latency FPV gimbal control.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SAAHAS landing state machine diagram">
-            <g font-family="JetBrains Mono, monospace" font-size="11.5" fill="#e7ece9">
-              <rect x="0" y="70" width="118" height="42" fill="#10161a" stroke="#22302f"/>
-              <text x="59" y="95" text-anchor="middle">WAITING_ARMED</text>
-
-              <line x1="118" y1="91" x2="136" y2="91" stroke="#5c6b67"/>
-              <polygon points="136,86 146,91 136,96" fill="#5c6b67"/>
-              <rect x="146" y="70" width="118" height="42" fill="#10161a" stroke="#22302f"/>
-              <text x="205" y="95" text-anchor="middle">TAKING_OFF</text>
-
-              <line x1="264" y1="91" x2="282" y2="91" stroke="#5c6b67"/>
-              <polygon points="282,86 292,91 282,96" fill="#5c6b67"/>
-              <rect x="292" y="70" width="118" height="42" fill="#10161a" stroke="#5fd9c9"/>
-              <text x="351" y="95" text-anchor="middle" fill="#5fd9c9">GPS_FOLLOW</text>
-
-              <line x1="410" y1="91" x2="428" y2="91" stroke="#5c6b67"/>
-              <polygon points="428,86 438,91 428,96" fill="#5c6b67"/>
-              <rect x="438" y="70" width="118" height="42" fill="#10161a" stroke="#22302f"/>
-              <text x="497" y="95" text-anchor="middle">GPS_DESCEND</text>
-
-              <line x1="556" y1="91" x2="574" y2="91" stroke="#5c6b67"/>
-              <polygon points="574,86 584,91 574,96" fill="#5c6b67"/>
-              <rect x="584" y="70" width="112" height="42" fill="#10161a" stroke="#ffb020"/>
-              <text x="640" y="95" text-anchor="middle" fill="#ffb020">CAMERA_LAND</text>
-
-              <line x1="640" y1="112" x2="640" y2="146" stroke="#ffb020"/>
-              <polygon points="635,146 640,156 645,146" fill="#ffb020"/>
-              <rect x="584" y="156" width="112" height="38" fill="#ffb020" stroke="#ffb020"/>
-              <text x="640" y="180" text-anchor="middle" fill="#0a0e0f" font-weight="700">LAND</text>
-
-              <path d="M 596 112 C 540 175 420 175 360 112" fill="none" stroke="#5fd9c9" stroke-width="1.3" stroke-dasharray="4 4"/>
-              <polygon points="356,118 351,107 366,110" fill="#5fd9c9"/>
-              <text x="478" y="203" text-anchor="middle" fill="#8a9994" font-size="10.5">target lost → CAMERA_SEARCH / GPS_REACQUIRE</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">State transitions gated on live thresholds — <b>GPS_FOLLOW → GPS_DESCEND</b> at dist &lt; 0.6m, <b>→ CAMERA_LAND</b> at alt &lt; 7m, <b>→ LAND</b> only once tracked-area ≥ 80% and pixel error &lt; 15px on both axes.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">Wokwi / GitHub</a></div>
-      </div>
-
-      <div class="proj wide">
-        <span class="proj-tag">navigation</span>
-        <h3>RTK GNSS Correction Pipeline</h3>
-        <p>Centimeter-level positioning for the flight controller by relaying, validating, and re-injecting live RTK correction data end to end — from base station to aircraft.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RTK correction pipeline architecture diagram">
-            <g font-family="JetBrains Mono, monospace" font-size="11" fill="#e7ece9">
-              <rect x="0" y="24" width="122" height="42" fill="#10161a" stroke="#5fd9c9"/>
-              <text x="61" y="41" text-anchor="middle" fill="#5fd9c9">Base F9P</text>
-              <text x="61" y="56" text-anchor="middle" font-size="9.5" fill="#5c6b67">fixed survey pt</text>
-
-              <line x1="122" y1="45" x2="146" y2="45" stroke="#5c6b67"/>
-              <polygon points="146,40 156,45 146,50" fill="#5c6b67"/>
-              <text x="139" y="18" text-anchor="middle" font-size="9.5" fill="#8a9994">RTCM3</text>
-
-              <rect x="156" y="24" width="122" height="42" fill="#10161a" stroke="#22302f"/>
-              <text x="217" y="41" text-anchor="middle">Laptop</text>
-              <text x="217" y="56" text-anchor="middle" font-size="9.5" fill="#5c6b67">COM22</text>
-
-              <line x1="278" y1="45" x2="302" y2="45" stroke="#5c6b67"/>
-              <polygon points="302,40 312,45 302,50" fill="#5c6b67"/>
-              <text x="295" y="18" text-anchor="middle" font-size="9.5" fill="#8a9994">radio link</text>
-
-              <rect x="312" y="24" width="132" height="42" fill="#10161a" stroke="#22302f"/>
-              <text x="378" y="41" text-anchor="middle">MicoAir L900A</text>
-              <text x="378" y="56" text-anchor="middle" font-size="9.5" fill="#5c6b67">telemetry radio</text>
-
-              <line x1="444" y1="45" x2="468" y2="45" stroke="#5c6b67"/>
-              <polygon points="468,40 478,45 468,50" fill="#5c6b67"/>
-              <text x="461" y="18" text-anchor="middle" font-size="9.5" fill="#8a9994">UART</text>
-
-              <rect x="478" y="24" width="112" height="42" fill="#10161a" stroke="#22302f"/>
-              <text x="534" y="41" text-anchor="middle">Raspberry Pi</text>
-              <text x="534" y="56" text-anchor="middle" font-size="9.5" fill="#5c6b67">CRC24Q check</text>
-
-              <line x1="590" y1="45" x2="608" y2="45" stroke="#5c6b67"/>
-              <polygon points="608,40 618,45 608,50" fill="#5c6b67"/>
-              <text x="602" y="18" text-anchor="middle" font-size="9.5" fill="#8a9994">MAVLink</text>
-
-              <rect x="618" y="24" width="82" height="42" fill="#10161a" stroke="#ffb020"/>
-              <text x="659" y="41" text-anchor="middle" fill="#ffb020">FC</text>
-              <text x="659" y="56" text-anchor="middle" font-size="9.5" fill="#5c6b67">ArduPilot</text>
-
-              <text x="350" y="100" text-anchor="middle" font-size="10.5" fill="#8a9994">RTCM 1005 frames validated (CRC24Q) and ECEF→WGS84 converted before injection</text>
-              <text x="350" y="118" text-anchor="middle" font-size="10.5" fill="#5fd9c9">result: RTK Float → RTK Fixed</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">Built <b>pipe_rtcm_only.py</b> and <b>rtk_injector_rpi.py</b> to debug the injection path and drive the link from Float to Fixed.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub</a></div>
-      </div>
-
-      <div class="proj">
-        <span class="proj-tag">systems</span>
-        <h3>Custom Heap Allocator in C</h3>
-        <p>First-fit allocator with block splitting, adjacent-block coalescing, and 8-byte alignment. Validated across 900K+ randomized alloc/free ops with zero invariant violations. Currently porting from PC simulation to STM32F411.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Allocator benchmark chart: latency vs glibc malloc, and peak heap utilization">
-            <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="#8a9994">
-              <text x="0" y="14">latency / op, 10M+ operations</text>
-              <text x="60" y="34">glibc malloc</text>
-              <rect x="150" y="24" width="150" height="14" fill="#22302f"/>
-              <text x="60" y="58">this allocator</text>
-              <rect x="150" y="48" width="130" height="14" fill="#ffb020"/>
-              <text x="150" y="76" font-size="10" fill="#5fd9c9">8–13% lower latency, same workload set</text>
-
-              <line x1="0" y1="96" x2="320" y2="96" stroke="#22302f"/>
-              <text x="0" y="114">peak heap utilization</text>
-              <rect x="0" y="122" width="260" height="12" fill="#182220" stroke="#22302f"/>
-              <rect x="0" y="122" width="239" height="12" fill="#5fd9c9"/>
-              <text x="266" y="132" fill="#5fd9c9">92%</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">Fragmentation kept low by coalescing adjacent free blocks on every free() — measured across 900K+ randomized alloc/free ops with zero heap-invariant violations.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub</a></div>
-      </div>
-
-      <div class="proj">
-        <span class="proj-tag">firmware</span>
-        <h3>Interrupt-Driven UART Driver</h3>
-        <p>Register-level STM32 UART driver in Embedded C — no HAL. Configures UART/GPIO through memory-mapped registers, computes baud-rate timing by hand, and handles RX interrupts via the NVIC.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 300 168" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Circular RX buffer diagram showing read and write pointers">
-            <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8a9994">
-              <text x="24" y="30">read ptr</text>
-              <line x1="38" y1="34" x2="38" y2="46" stroke="#5fd9c9"/>
-              <polygon points="34,46 38,53 42,46" fill="#5fd9c9"/>
-              <text x="152" y="30">write ptr (RX ISR)</text>
-              <line x1="166" y1="34" x2="166" y2="46" stroke="#ffb020"/>
-              <polygon points="162,46 166,53 170,46" fill="#ffb020"/>
-
-              <g stroke="#22302f">
-                <rect x="24" y="54" width="28" height="28" fill="#ffb020" fill-opacity="0.85" stroke="#ffb020"/>
-                <rect x="56" y="54" width="28" height="28" fill="#ffb020" fill-opacity="0.55" stroke="#ffb020"/>
-                <rect x="88" y="54" width="28" height="28" fill="#ffb020" fill-opacity="0.3" stroke="#ffb020"/>
-                <rect x="120" y="54" width="28" height="28" fill="#10161a"/>
-                <rect x="152" y="54" width="28" height="28" fill="#10161a"/>
-                <rect x="184" y="54" width="28" height="28" fill="#10161a"/>
-                <rect x="216" y="54" width="28" height="28" fill="#10161a"/>
-                <rect x="248" y="54" width="28" height="28" fill="#10161a"/>
-              </g>
-
-              <path d="M 276 90 C 300 125 4 125 24 90" fill="none" stroke="#5c6b67" stroke-width="1.2" stroke-dasharray="3 4"/>
-              <polygon points="20,84 12,94 28,96" fill="#5c6b67"/>
-              <text x="150" y="140" text-anchor="middle" fill="#5c6b67" font-size="9">index wraps at buffer end</text>
-              <text x="150" y="158" text-anchor="middle" fill="#8a9994" font-size="9.5">unread bytes (amber) · free slots (empty)</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">Non-blocking circular-buffer RX/TX — write ptr advances only inside the ISR, read ptr only in application code. Overflow and UART overrun both flagged explicitly rather than silently dropped.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub</a></div>
-      </div>
-
-      <div class="proj">
-        <span class="proj-tag">rtos</span>
-        <h3>FreeRTOS UART Activity Monitor</h3>
-        <p>Three concurrent tasks coordinated with binary semaphores and one-shot software timers — no polling.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FreeRTOS task and timer coordination diagram">
-            <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#e7ece9">
-              <rect x="4" y="12" width="86" height="34" fill="#10161a" stroke="#22302f"/>
-              <text x="47" y="33" text-anchor="middle" font-size="9">UART RX Task</text>
-              <rect x="107" y="12" width="86" height="34" fill="#10161a" stroke="#22302f"/>
-              <text x="150" y="33" text-anchor="middle" font-size="9">Process Task</text>
-              <rect x="210" y="12" width="86" height="34" fill="#10161a" stroke="#22302f"/>
-              <text x="253" y="33" text-anchor="middle" font-size="9">Monitor Task</text>
-
-              <line x1="90" y1="29" x2="105" y2="29" stroke="#5c6b67" stroke-dasharray="2 3"/>
-              <line x1="193" y1="29" x2="208" y2="29" stroke="#5c6b67" stroke-dasharray="2 3"/>
-
-              <line x1="47" y1="46" x2="47" y2="90" stroke="#ffb020"/>
-              <polygon points="43,90 47,98 51,90" fill="#ffb020"/>
-              <text x="55" y="72" font-size="9" fill="#ffb020">resets timer</text>
-
-              <rect x="90" y="100" width="120" height="32" fill="#10161a" stroke="#ffb020"/>
-              <text x="150" y="120" text-anchor="middle" fill="#ffb020" font-size="9.5">one-shot timer · 2s</text>
-
-              <line x1="150" y1="132" x2="150" y2="146" stroke="#5c6b67"/>
-              <polygon points="146,146 150,154 154,146" fill="#5c6b67"/>
-              <text x="150" y="168" text-anchor="middle" font-size="9.5" fill="#8a9994">timeout → inactivity flagged, Monitor Task notified</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">The timer resets on every RX event; if it ever fires uninterrupted, the system is idle — detected without a single polling loop.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">Wokwi</a></div>
-      </div>
-
-      <div class="proj">
-        <span class="proj-tag">networking</span>
-        <h3>TCP File Transfer Protocol in C</h3>
-        <p>Reliable file transfer over raw TCP with custom application-layer framing and hand-rolled send_all()/recv_exactly() to handle partial I/O.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 300 145" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TCP application-layer frame layout diagram">
-            <g font-family="JetBrains Mono, monospace" font-size="9" fill="#e7ece9">
-              <rect x="10" y="20" width="40" height="30" fill="#10161a" stroke="#22302f"/>
-              <text x="30" y="39" text-anchor="middle" font-size="8.5">namelen</text>
-              <rect x="50" y="20" width="70" height="30" fill="#10161a" stroke="#22302f"/>
-              <text x="85" y="39" text-anchor="middle" font-size="8.5">filename</text>
-              <rect x="120" y="20" width="50" height="30" fill="#10161a" stroke="#22302f"/>
-              <text x="145" y="39" text-anchor="middle" font-size="8.5">filesize</text>
-              <rect x="170" y="20" width="120" height="30" fill="#10161a" stroke="#5fd9c9" stroke-dasharray="3 3"/>
-              <text x="230" y="39" text-anchor="middle" font-size="8.5" fill="#5fd9c9">binary payload (chunked)</text>
-
-              <text x="150" y="65" text-anchor="middle" font-size="9" fill="#8a9994">network byte order · custom framing</text>
-
-              <path d="M 40 90 A 18 18 0 1 1 39.9 90" fill="none" stroke="#ffb020" stroke-width="1.4"/>
-              <polygon points="34,73 44,73 39,64" fill="#ffb020"/>
-              <text x="70" y="86" font-size="9" fill="#ffb020">retries on partial write/read</text>
-              <text x="70" y="100" font-size="8.5" fill="#5c6b67">send_all() / recv_exactly()</text>
-
-              <text x="150" y="130" text-anchor="middle" font-size="9.5" fill="#5fd9c9">verified: SHA-256 match, Linux → macOS, 22.8MB</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">Every send/recv is wrapped so a partial TCP write never silently corrupts the frame.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub</a></div>
-      </div>
-
-      <div class="proj">
-        <span class="proj-tag">robotics</span>
-        <h3>Intelligent Ground Vehicle — Robofest 5.0</h3>
-        <p>Autonomous ROS 2 six-wheeled ground vehicle pairing RPLidar-based obstacle avoidance with OpenCV lane detection. 2nd place, ₹7,50,000 prize.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 300 168" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="IGV sensor and control architecture diagram">
-            <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#e7ece9">
-              <rect x="4" y="10" width="130" height="34" fill="#10161a" stroke="#22302f"/>
-              <text x="69" y="31" text-anchor="middle" font-size="9">RPLidar C1M1</text>
-              <rect x="166" y="10" width="130" height="34" fill="#10161a" stroke="#22302f"/>
-              <text x="231" y="31" text-anchor="middle" font-size="9">Camera (OpenCV lanes)</text>
-
-              <line x1="69" y1="44" x2="130" y2="72" stroke="#5c6b67"/>
-              <line x1="231" y1="44" x2="170" y2="72" stroke="#5c6b67"/>
-              <polygon points="126,68 138,72 130,80" fill="#5c6b67"/>
-              <polygon points="174,68 162,72 170,80" fill="#5c6b67"/>
-
-              <rect x="70" y="78" width="160" height="36" fill="#10161a" stroke="#5fd9c9"/>
-              <text x="150" y="98" text-anchor="middle" fill="#5fd9c9" font-size="9.5">Jetson Orin — ROS 2 stack</text>
-              <text x="150" y="110" text-anchor="middle" fill="#5c6b67" font-size="8">lane follow · obstacle avoid · ramp</text>
-
-              <line x1="150" y1="114" x2="150" y2="130" stroke="#ffb020"/>
-              <polygon points="146,130 150,138 154,130" fill="#ffb020"/>
-              <rect x="90" y="138" width="120" height="26" fill="#10161a" stroke="#ffb020"/>
-              <text x="150" y="155" text-anchor="middle" fill="#ffb020" font-size="9">Arduino — serial motor control</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">Perception runs on the Orin; the Arduino only executes motor commands over serial — kept deliberately dumb for reliability.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub</a></div>
-      </div>
-
-      <div class="proj">
-        <span class="proj-tag">robotics</span>
-        <h3>ROS 2 SLAM &amp; Navigation — TurtleBot3</h3>
-        <p>ROS 2 Humble navigation stack integrating SLAM Toolbox, Navigation2, and Gazebo for autonomous mapping and navigation.</p>
-
-        <div class="diagram">
-          <svg class="d" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ROS 2 SLAM and navigation pipeline diagram">
-            <g font-family="JetBrains Mono, monospace" font-size="9" fill="#e7ece9">
-              <rect x="0" y="30" width="66" height="34" fill="#10161a" stroke="#22302f"/>
-              <text x="33" y="51" text-anchor="middle" font-size="8">LiDAR scan</text>
-              <line x1="66" y1="47" x2="80" y2="47" stroke="#5c6b67"/>
-              <polygon points="80,42 88,47 80,52" fill="#5c6b67"/>
-
-              <rect x="88" y="30" width="80" height="34" fill="#10161a" stroke="#5fd9c9"/>
-              <text x="128" y="51" text-anchor="middle" fill="#5fd9c9" font-size="8">SLAM Toolbox</text>
-              <line x1="168" y1="47" x2="182" y2="47" stroke="#5c6b67"/>
-              <polygon points="182,42 190,47 182,52" fill="#5c6b67"/>
-
-              <rect x="190" y="30" width="60" height="34" fill="#10161a" stroke="#22302f"/>
-              <text x="220" y="51" text-anchor="middle" font-size="8">Nav2</text>
-              <line x1="250" y1="47" x2="264" y2="47" stroke="#5c6b67"/>
-              <polygon points="264,42 272,47 264,52" fill="#5c6b67"/>
-
-              <rect x="272" y="30" width="26" height="34" fill="#10161a" stroke="#ffb020"/>
-              <text x="285" y="47" text-anchor="middle" fill="#ffb020" font-size="7.5">Bot</text>
-              <text x="285" y="58" text-anchor="middle" fill="#ffb020" font-size="6.5">3</text>
-
-              <path d="M 220 64 C 220 95 128 95 128 64" fill="none" stroke="#5c6b67" stroke-dasharray="3 4"/>
-              <polygon points="124,70 118,80 132,80" fill="#5c6b67"/>
-              <text x="174" y="112" text-anchor="middle" font-size="8.5" fill="#8a9994">localization feedback into the map</text>
-
-              <text x="150" y="138" text-anchor="middle" font-size="9.5" fill="#5fd9c9">92% occupancy-grid mapping accuracy</text>
-            </g>
-          </svg>
-          <div class="diagram-caption">Nav2's localization continuously corrects the SLAM Toolbox map — not a one-shot scan-and-plan pipeline.</div>
-        </div>
-
-        <div class="proj-links"><a href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub</a></div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="skills">
-    <h2>Skills</h2>
-    <div class="reg-map">
-      <div class="reg-row">
-        <div class="reg-label">languages</div>
-        <div class="reg-vals">
-          <span class="chip">C</span><span class="chip">Embedded C</span><span class="chip">Python</span>
-        </div>
-      </div>
-      <div class="reg-row">
-        <div class="reg-label">embedded</div>
-        <div class="reg-vals">
-          <span class="chip">STM32 (Cortex-M)</span><span class="chip">FreeRTOS</span><span class="chip">ESP32</span><span class="chip">Arduino</span><span class="chip">Linux</span>
-        </div>
-      </div>
-      <div class="reg-row">
-        <div class="reg-label">protocols</div>
-        <div class="reg-vals">
-          <span class="chip">TCP/IP</span><span class="chip">UART</span><span class="chip">SPI</span><span class="chip">I2C</span><span class="chip">CAN</span><span class="chip">MAVLink</span><span class="chip">RTCM</span><span class="chip">UBX</span><span class="chip">NMEA</span>
-        </div>
-      </div>
-      <div class="reg-row">
-        <div class="reg-label">robotics / vision</div>
-        <div class="reg-vals">
-          <span class="chip">ROS 2 Humble</span><span class="chip">Navigation2</span><span class="chip">SLAM Toolbox</span><span class="chip">Gazebo</span><span class="chip">RViz2</span><span class="chip">OpenCV</span><span class="chip">RTK GNSS</span>
-        </div>
-      </div>
-      <div class="reg-row">
-        <div class="reg-label">platforms / tools</div>
-        <div class="reg-vals">
-          <span class="chip">Raspberry Pi</span><span class="chip">Jetson Orin</span><span class="chip">Git</span><span class="chip">GCC</span><span class="chip">GDB</span><span class="chip">ArduPilot</span><span class="chip">Mission Planner</span><span class="chip">Wokwi</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="achievements">
-    <h2>Achievements</h2>
-    <div class="ach-list">
-      <div class="ach"><span class="ach-mark">01</span><p><strong>2nd place, Robofest 5.0</strong> — ₹7,50,000 cash prize for the Intelligent Ground Vehicle</p></div>
-      <div class="ach"><span class="ach-mark">02</span><p>Demonstrated <strong>GPS-denied drone operations</strong> and multimodal Edge-AI detection at 14 Sikh Military Station, Kota</p></div>
-      <div class="ach"><span class="ach-mark">03</span><p>Awarded <strong>₹2,00,000 prototype funding grant</strong> — Robofest 4.0</p></div>
-      <div class="ach"><span class="ach-mark">04</span><p><strong>2nd place</strong>, RC SUMO Robot competition &nbsp;·&nbsp; <strong>3rd place</strong>, SVNIT Line Follower competition</p></div>
-    </div>
-  </section>
-
-  <section id="education">
-    <h2>Education &amp; Leadership</h2>
-    <div class="edu-row">
-      <div><div class="edu-name">B.Tech, Electronics &amp; Communication Engineering</div><div class="edu-sub">Institute of Technology, Nirma University — CGPA 8.75/10</div></div>
-      <div class="edu-meta">2023 — 2027</div>
-    </div>
-    <div class="edu-row">
-      <div><div class="edu-name">Technical Head</div><div class="edu-sub">ECO — Electronics &amp; Communication Students' Organisation</div></div>
-      <div class="edu-meta">Dec 2025 — Present</div>
-    </div>
-    <div class="edu-row">
-      <div><div class="edu-name">Technical Executive</div><div class="edu-sub">ECO — Electronics &amp; Communication Students' Organisation</div></div>
-      <div class="edu-meta">Aug 2024 — Dec 2025</div>
-    </div>
-    <div class="edu-row">
-      <div><div class="edu-name">Technical Head</div><div class="edu-sub">Tinkerer's Lab, Nirma University — fabrication equipment, workshops with IIT Madras LEAP</div></div>
-      <div class="edu-meta"></div>
-    </div>
-  </section>
-
-  <footer id="contact">
-    <h2>Contact</h2>
-    <p class="contact-line">Open to embedded systems roles.<br><a href="mailto:krishna.r282005@gmail.com">krishna.r282005@gmail.com</a></p>
-    <div class="foot-meta">
-      <span>© 2026 Krishna Patel</span>
-      <span>
-        <a href="https://github.com/krishna282005" target="_blank" rel="noopener">GitHub</a> &nbsp;·&nbsp;
-        <a href="https://www.linkedin.com/in/krishna-patel-77b032345/" target="_blank" rel="noopener">LinkedIn</a>
-      </span>
-    </div>
-  </footer>
-
+<header><nav class="container"><a class="brand" href="#home">KP<b>_</b></a><div class="nav"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div></nav></header>
+
+<main id="home">
+<div class="container">
+<section class="hero">
+<div class="kicker">Embedded systems · robotics · autonomy</div>
+<h1>Krishna Patel</h1>
+<p>Building <strong>firmware, control and perception systems</strong> for autonomous machines — from register-level STM32 drivers and RTOS experiments to RTK-guided UAVs and ROS 2 vision systems.</p>
+<div class="buttons"><a class="btn primary" href="mailto:krishna.r282005@gmail.com">Get in touch</a><a class="btn" href="https://github.com/krishna282005" target="_blank">GitHub ↗</a><a class="btn" href="https://www.linkedin.com/in/krishna-patel-77b032345/" target="_blank">LinkedIn ↗</a></div>
+<div class="quick"><div><small>Focus</small><strong>Embedded + Robotics</strong></div><div><small>University</small><strong>Nirma · B.Tech ECE</strong></div><div><small>Core stack</small><strong>C · STM32 · ROS 2</strong></div><div><small>Current build</small><strong>Vision-guided stage</strong></div></div>
+</section>
+
+<section id="experience"><h2>Experience <span>//</span></h2>
+<div class="exp"><div class="date">2025 — 2026</div><div><h3>Embedded System Design Engineer</h3><div class="org">Protthapan Technologies Pvt. Ltd. · UAV / Aerospace</div><ul><li>Developed and tested autonomous UAV systems including SAAHAS 1.0 / 2.0 for precision docking and moving-platform recovery.</li><li>Built RTK GNSS correction and MAVLink telemetry pipelines; worked across flight controllers, Raspberry Pi and radio links.</li><li>Designed electronics/control architecture for a 40 kg payload UAV with CAN-based FC ↔ ESC communication and supported 100+ field trials.</li></ul></div></div>
+<div class="exp"><div class="date">2024</div><div><h3>Summer Intern</h3><div class="org">Adani Foundation</div><ul><li>Conducted technical sessions, stakeholder interactions and structured field data collection.</li></ul></div></div>
+</section>
+
+<section id="projects"><h2>Selected Projects <span>//</span></h2><p class="section-intro">Every project is a case study. Open one to see the problem, architecture, implementation, media and source code.</p>
+<div class="filters"><button class="filter active" data-filter="all">all</button><button class="filter" data-filter="uav">uav</button><button class="filter" data-filter="embedded">embedded</button><button class="filter" data-filter="robotics">robotics</button><button class="filter" data-filter="systems">systems</button><button class="filter" data-filter="ml">ml</button></div>
+<div class="projects" id="project-grid"></div>
+</section>
+
+<section id="skills"><h2>Skills <span>//</span></h2><div class="skills">
+<div class="skill"><h4>FIRMWARE</h4><p>C, Embedded C, STM32 Cortex-M, ESP32, FreeRTOS, interrupts, registers, memory management.</p></div>
+<div class="skill"><h4>PROTOCOLS</h4><p>UART, SPI, I2C, CAN, TCP/IP, MAVLink, RTCM, UBX, NMEA.</p></div>
+<div class="skill"><h4>ROBOTICS</h4><p>ROS 2 Humble, Navigation2, SLAM Toolbox, Gazebo, RViz2, ArduPilot, Mission Planner.</p></div>
+<div class="skill"><h4>VISION / ML</h4><p>OpenCV, visual tracking, AprilTags, PID control, telemetry ML, Random Forest, XGBoost.</p></div>
+<div class="skill"><h4>PLATFORMS</h4><p>Raspberry Pi, Jetson Orin, Arduino, Linux, Git, GCC, GDB, Wokwi.</p></div>
+</div></section>
+
+<section id="achievements"><h2>Achievements <span>//</span></h2>
+<div class="ach"><div class="n">01</div><p><strong>Robofest 5.0 — 2nd place</strong> with the Intelligent Ground Vehicle project.</p></div>
+<div class="ach"><div class="n">02</div><p><strong>100+ UAV field trials</strong> across development and validation work.</p></div>
+<div class="ach"><div class="n">03</div><p><strong>₹2,00,000 prototype funding</strong> — Robofest 4.0.</p></div>
+<div class="ach"><div class="n">04</div><p>Built and contributed across UAV, embedded, robotics and simulation projects through Nirma University activities and independent work.</p></div>
+</section>
+
+<footer id="contact"><div class="contact"><div><h3>Let’s build something that has to work.</h3><p>Open to embedded systems, firmware and robotics opportunities.</p></div><a class="btn primary" href="mailto:krishna.r282005@gmail.com">krishna.r282005@gmail.com ↗</a></div></footer>
+</div>
 </main>
 
+<div id="details"></div>
+
+<script>
+const projects={
+"saa-has":{title:"SAAHAS — Autonomous UAV Docking & Recovery",kicker:"UAV · FLAGSHIP",sub:"Autonomous recovery of a drone onto a moving platform using staged navigation, RTK/GPS following and vision-guided final landing.",image:"https://www.rtkarg.com/_next/image?q=75&url=%2F_next%2Fstatic%2Fmedia%2FDrone06.d8fdbd12.jpg&w=1920",repo:"https://github.com/krishna282005/gps_following_camera_landing",video:"Demo video slot — add the saved SAAHAS / precision-landing demo URL here.",stack:"RTK GNSS · OpenCV · MAVLink · ArduPilot · Raspberry Pi · Python",problem:"A moving-platform recovery problem is harder than ordinary waypoint landing: the target itself moves, GPS alone is not precise enough for the final approach, and the visual controller must take over without losing the aircraft’s recovery envelope.",built:["State-machine control from IDLE → GPS_FOLLOW → GPS_DESCEND → VISION_LAND → LANDED.","Platform velocity estimated from successive GNSS positions and sent to the drone controller during the vision phase.","Vision-assisted final alignment with a downward camera and controlled hand-off from global navigation to local image-based control.","RTK correction path and MAVLink telemetry used as part of the overall precision-navigation stack."],media:["https://www.rtkarg.com/_next/image?q=75&url=%2F_next%2Fstatic%2Fmedia%2FDrone06.d8fdbd12.jpg&w=1920"]},
+"morphle":{title:"Vision-Guided Robotic Microscope Stage",kicker:"ROBOTICS · ROS 2 · VISION",sub:"A simulated 3-axis Cartesian stage that closes the loop from microscope image → target centroid → position error → PID motion.",image:"https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1600&q=80",repo:"https://github.com/krishna282005/vision-guided-robotic-microscope",video:"Simulation demo slot — the repository currently contains the packaged simulation artifact (morphle_stage_with_img.zip).",stack:"ROS 2 Humble · Gazebo · OpenCV · PID · ros_gz_image · URDF",problem:"The goal is to model the positioning loop behind automated slide scanning: the camera sees a specimen region, perception finds its centroid, and the gantry moves until that centroid is centered in the optical field.",built:["3-DOF Cartesian stage model with X/Y positioning and Z optical mount.","Gazebo camera pipeline bridged into ROS 2 using ros_gz_image.","OpenCV perception node extracts target-region centroid and computes image-space error.","Velocity controller closes the loop on x_joint / y_joint / z_joint interfaces.","Simulation validated around a ~20 Hz camera stream and ros2_control interfaces."],media:["https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1600&q=80"]},
+"stm32f401_uart":{title:"Bare-Metal STM32F401 USART Driver",kicker:"EMBEDDED · FIRMWARE",sub:"Register-level USART1 implementation in Embedded C with interrupt-driven circular buffers and CRC-backed binary framing.",image:"https://www.st.com/bin/ecommerce/api/image.PF259930.en.feature-description-include-person.jpg",repo:"https://github.com/krishna282005/stm32f401_uart",video:"Hardware demo slot — add a UART capture / serial-console video here.",stack:"STM32F401CCUx · Embedded C · USART1 · NVIC · CRC · Circular buffers",problem:"Build a practical serial driver without relying on HAL abstractions, including concurrency-safe buffering, interrupt handling and a real application-layer frame format.",built:["Direct memory-mapped peripheral configuration for USART1 and GPIO.","Interrupt-driven TX and RX with separate circular buffers.","String/integer/hex helpers plus USART_printf().","RX overrun detection and explicit hardware ORE handling.","Binary protocol: 0xAA header + length + payload + CRC-32; verified with a HELLO frame."],media:["https://www.st.com/bin/ecommerce/api/image.PF259930.en.feature-description-include-person.jpg"]},
+"pref-rtos":{title:"PreFRTOS — Predictive Failure Detection",kicker:"EDGE ML · FREERTOS",sub:"Telemetry-driven prediction of near-future FreeRTOS failures using Random Forest and XGBoost.",image:"https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1600&q=80",repo:"https://github.com/krishna282005",video:"Live-prediction demo slot — add the PreFRTOS dashboard / ESP8266 video here.",stack:"ESP8266 · FreeRTOS · Python · scikit-learn · Random Forest · XGBoost",problem:"Embedded failures such as deadline misses, stack issues or abnormal task behavior often become visible only after the system is already unhealthy. PreFRTOS frames them as a short-horizon classification problem over recent telemetry.",built:["Telemetry sampled around every 50 ms and converted into rolling temporal features.","Target defined as failure occurrence in the next 500 ms.","Random Forest and XGBoost used for the model pipeline; Logistic Regression intentionally excluded from the current project direction.","Live prediction path reports prediction and warning timestamps for each event.","Work includes dataset generation, training/testing split and lead-time analysis."],media:["https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1600&q=80"]},
+"allocator":{title:"Custom Heap Allocator in C",kicker:"SYSTEMS · C",sub:"A first-fit dynamic memory allocator with free-list management, block splitting/coalescing and workload benchmarking.",image:"https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=1600&q=80",repo:"https://github.com/krishna282005/Memory-Allocator-C",video:"Benchmark demo slot — add allocator workload / heap-visualization video here.",stack:"C · First-Fit · Free Lists · Alignment · Fragmentation Metrics · Benchmarks",problem:"Understand dynamic memory from the inside rather than treating malloc/free as black boxes.",built:["First-fit search over a managed fixed-size heap.","8-byte alignment and block splitting.","Adjacent-block coalescing on free().","Heap/free-list inspection utilities and fragmentation metrics.","Workload suite for fixed-size churn, random churn, growing/shrinking and stress-to-failure."],media:["https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=1600&q=80"]},
+"tcp-file-transfer":{title:"TCP File Transfer Protocol in C",kicker:"NETWORKING · SYSTEMS",sub:"Raw TCP client/server with custom application-layer framing and explicit handling of partial socket I/O.",image:"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80",repo:"https://github.com/krishna282005",video:"Transfer demo slot — add the latest client/server capture here.",stack:"C · POSIX sockets · TCP · send_all() · recv_exactly() · Framing",problem:"TCP is a byte stream, not a message protocol. The project focuses on making file transfers reliable by defining framing and handling partial send/receive operations explicitly.",built:["Socket setup and client/server transfer flow.","Application-layer metadata framing for filename and file size.","send_all() / recv_exactly() helpers for partial I/O.","Chunked binary payload transfer and progress reporting.","Cross-host testing across Linux and macOS."],media:["https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80"]},
+"igv":{title:"Intelligent Ground Vehicle",kicker:"ROBOTICS · COMPETITION",sub:"ROS 2 ground vehicle combining LiDAR obstacle handling, OpenCV lane perception and a Jetson/Arduino control split.",image:"https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1600&q=80",repo:"https://github.com/krishna282005",video:"Competition demo slot — add the IGV run video here.",stack:"ROS 2 · Jetson Orin · OpenCV · RPLidar · Arduino · Serial control",problem:"Keep perception and autonomy computation on a capable companion computer while making the low-level actuator controller simple and deterministic.",built:["Obstacle awareness using LiDAR.","OpenCV lane-detection pipeline.","ROS 2 orchestration on Jetson Orin.","Serial command interface from Jetson to Arduino motor layer.","Competition-oriented autonomous navigation and testing."],media:["https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1600&q=80"]},
+"slam":{title:"ROS 2 SLAM & Navigation — TurtleBot3",kicker:"ROBOTICS · SIMULATION",sub:"A practical ROS 2 navigation workflow spanning mapping, localization, planning and simulation debugging.",image:"https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1600&q=80",repo:"https://github.com/krishna282005/ROS2-URDF-3DOF-ARM-MODEL",video:"Mapping demo slot — add the latest TurtleBot3 / Gazebo recording here.",stack:"ROS 2 Humble · SLAM Toolbox · Navigation2 · Gazebo · RViz2",problem:"Move from simply visualizing a robot to understanding the complete map → localization → navigation loop in simulation.",built:["Custom mapping experiments with TurtleBot3.","SLAM Toolbox for map generation.","Navigation2 for localization and autonomous movement.","Gazebo/RViz debugging and navigation tuning.","Used lessons from mapping quality and localization feedback to understand failure cases."],media:["https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1600&q=80"]}
+};
+
+const order=[
+["saa-has","uav","Flagship system","SAAHAS — Autonomous UAV Docking & Recovery","A multi-stage landing system combining RTK/GPS following, controlled descent, vision lock and platform-motion compensation for recovery onto a moving platform.",["RTK GNSS","OpenCV","MAVLink","ArduPilot","Raspberry Pi"],true,"gps_following_camera_landing"],
+["morphle","robotics","Latest simulation","Vision-Guided Robotic Microscope Stage","ROS 2 + Gazebo simulation of a 3-axis Cartesian stage that uses a microscope camera, OpenCV perception and PID control to center specimen regions.",["ROS 2 Humble","Gazebo","OpenCV","PID","Prismatic joints"],true,"vision-guided-robotic-microscope"],
+["stm32f401_uart","embedded","Firmware","Bare-Metal STM32F401 USART Driver","Register-level USART1 firmware with interrupt-driven RX/TX, circular buffers, a message queue and CRC-backed binary framing — no HAL.",["Embedded C","STM32F401","NVIC","USART","CRC-32"],false,"stm32f401_uart"],
+["pref-rtos","ml","Edge ML","PreFRTOS — Predictive Failure Detection","Telemetry-driven ML pipeline for predicting FreeRTOS failures such as deadline misses, stack-related faults and anomalous behavior before they occur.",["ESP8266","FreeRTOS","Random Forest","XGBoost","Python"],false,"PreFRTOS"],
+["allocator","systems","Systems","Custom Heap Allocator in C","First-fit allocator with splitting, coalescing, alignment, free-list inspection and workload benchmarking for embedded-oriented memory management.",["C","Pointers","Heap","Free list","Benchmarking"],false,"Memory-Allocator-C"],
+["tcp-file-transfer","systems","Networking","TCP File Transfer Protocol in C","Raw TCP client/server with custom framing and exact send/receive helpers designed to survive partial socket I/O.",["C","POSIX sockets","TCP","Protocol framing","Linux"],false,"TCP file transfer"],
+["igv","robotics","Competition robotics","Intelligent Ground Vehicle","ROS 2 ground robot stack combining LiDAR obstacle handling, OpenCV lane detection and Jetson/Arduino split-control architecture.",["ROS 2","Jetson Orin","OpenCV","RPLidar","Arduino"],false,"IGV"],
+["slam","robotics","Simulation","ROS 2 SLAM & Navigation","Hands-on TurtleBot3 simulation using SLAM Toolbox, Navigation2 and Gazebo, including custom-map exploration and navigation tuning.",["ROS 2 Humble","SLAM Toolbox","Nav2","Gazebo","RViz2"],false,"TurtleBot3"]
+];
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function renderCards(){
+document.getElementById("project-grid").innerHTML=order.map(([id,cat,label,title,desc,tags,featured,repoLabel])=>{
+const p=projects[id];return '<a class="card '+(featured?'featured ':'')+'" data-cat="'+cat+'" href="#project/'+id+'"><div class="thumb"><img loading="lazy" src="'+p.image+'" alt="'+esc(title)+'"></div><div class="body"><div class="tag">'+esc(label)+'</div><h3>'+esc(title)+'</h3><p>'+esc(desc)+'</p><div class="tech">'+tags.map(t=>'<span class="chip">'+esc(t)+'</span>').join('')+'</div><div class="card-footer"><span>'+esc(repoLabel)+'</span><span class="open">Open case study ↗</span></div></div></a>';
+}).join('');
+}
+function renderDetail(id){
+const p=projects[id];if(!p)return;
+document.getElementById("home").classList.add("hide");
+const d=document.getElementById("details");
+d.innerHTML='<div class="container detail show"><div class="detail-top"><div><a class="back" href="#home">← Back to portfolio</a><div class="kicker" style="margin-top:20px">'+esc(p.kicker)+'</div><h1>'+esc(p.title)+'</h1><p class="detail-sub">'+esc(p.sub)+'</p></div><a class="btn" href="'+p.repo+'" target="_blank">Source ↗</a></div><div class="detail-grid"><div class="detail-copy"><div class="hero-media"><img src="'+p.image+'" alt="'+esc(p.title)+' contextual media"></div><div style="margin-top:28px"><h2>Problem</h2><p>'+esc(p.problem)+'</p></div><div style="margin-top:28px"><h2>What I built</h2><ul>'+p.built.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div class="video">'+esc(p.video)+'</div><div class="note">The lead image and any images below are contextual reference media unless they are explicitly from the project repository. Replace video slots with the real project recordings, screenshots or test footage for a fully project-authentic case study.</div><div class="media-grid">'+p.media.map((m,i)=>'<img loading="lazy" src="'+m+'" alt="'+esc(p.title)+' media '+(i+1)+'">').join('')+'</div></div><aside class="meta"><dl><dt>Stack</dt><dd>'+esc(p.stack)+'</dd><dt>Repository</dt><dd><a href="'+p.repo+'" target="_blank" style="color:var(--cyan)">Open source repository ↗</a></dd></dl></aside></div></div>';
+window.scrollTo({top:0,behavior:"instant"});
+}
+renderCards();
+function route(){const hash=location.hash;if(hash.startsWith("#project/"))renderDetail(hash.split("/")[1]);else{document.getElementById("details").innerHTML="";document.getElementById("home").classList.remove("hide");if(hash!=="#home")document.getElementById("home").scrollIntoView({behavior:"instant"});}}
+window.addEventListener("hashchange",route);route();
+document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
+document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+const f=btn.dataset.filter;document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hide",f!=="all"&&c.dataset.cat!==f));
+}));
+</script>
 </body>
 </html>
