@@ -1,0 +1,28 @@
+name: Build portfolio explainers
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'media/*.mp4'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install rendering tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg python3-pil
+      - name: Render 15-second project explainers
+        run: python3 scripts/generate_explainers.py
+      - name: Commit generated videos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add media/*.mp4
+          git diff --cached --quiet && exit 0
+          git commit -m "Add project architecture explainer videos [skip ci]"
+          git push
